@@ -1,4 +1,4 @@
-import { AdminCourseType } from "@/app/data/admin/admin-get-courses";
+import { AdminCoursesType } from "@/app/data/admin/admin-get-courses";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -22,7 +22,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 interface IAppProps {
-  data: AdminCourseType;
+  data: AdminCoursesType;
 }
 export function AdminCourseCard({ data }: IAppProps) {
   const thumbnailUrl = useConstructUrl(data.fileKey);
