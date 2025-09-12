@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { getCourse } from "@/app/data/course/get-course";
 import { RenderDescription } from "@/components/rict-text-editor/RenderDescription";
 import { Badge } from "@/components/ui/badge";

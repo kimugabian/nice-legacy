@@ -149,7 +149,9 @@ export function LessonForm({ data, chapterId, courseId }: iAppProps) {
                   </FormItem>
                 )}
               />
-              <Button>Save Lesson</Button>
+              <Button disabled={pending}>
+                {pending ? "Saving..." : "Save Lesson"}
+              </Button>
             </form>
           </Form>
         </CardContent>
