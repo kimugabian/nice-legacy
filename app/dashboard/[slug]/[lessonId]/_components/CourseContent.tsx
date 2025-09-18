@@ -2,14 +2,16 @@
 
 import { LessonContentType } from "@/app/data/course/get-lesson-content";
 import { RenderDescription } from "@/components/rict-text-editor/RenderDescription";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { tryCatch } from "@/hooks/try-catch";
 import { useConstructUrl } from "@/hooks/use-construct-url";
-import { BookIcon, CheckCircle } from "lucide-react";
+import { BookIcon, CheckCircle, FileText } from "lucide-react";
 import { useTransition } from "react";
 import { markLessonCompleted } from "../actions";
 import { toast } from "sonner";
 import { useConfetti } from "@/hooks/use-confetti";
+import Link from "next/link";
+import { Quiz } from "./Quiz";
 
 interface iAppProps {
   data: LessonContentType;
@@ -58,6 +60,23 @@ export function CourseContent({ data }: iAppProps) {
     );
   }
 
+  function PdfViewer({ pdfKey }: { pdfKey: string }) {
+    const pdfUrl = useConstructUrl(pdfKey);
+    const previewUrl = `${pdfUrl}#toolbar=0&navpanes=0&scrollbar=0`;
+    return (
+      <div className="mt-4">
+        <Link
+          href={previewUrl}
+          target="_blank"
+          className={buttonVariants({ variant: "outline" })}
+        >
+          <FileText className="size-4" />
+          View PDF
+        </Link>
+      </div>
+    );
+  }
+
   function onSubmit() {
     startTransition(async () => {
       const { data: result, error } = await tryCatch(
@@ -86,7 +105,7 @@ export function CourseContent({ data }: iAppProps) {
       />
 
       <div className="py-4 border-b">
-        {data.lessonProgress.length > 0 ? (
+        {/* {data.lessonProgress.length > 0 ? (
           <Button
             variant="outline"
             className="bg-green-500/10 text-green-500 hover:text-green-600"
@@ -99,16 +118,36 @@ export function CourseContent({ data }: iAppProps) {
             <CheckCircle className="size-4 mr-2 text-green-500" />
             Mark as complete
           </Button>
-        )}
+        )} */}
       </div>
 
-      <div className="space-y-3 pt-3">
+      <div className="space-y-3 pt-3 border-b py-4">
         <h1 className="text-3xl font-bold tracking-tight text-foreground">
           {data.title}
         </h1>
         {data.description && (
           <RenderDescription json={JSON.parse(data.description)} />
         )}
+      </div>
+
+      <div className="py-4">
+        <h1 className="text-xl font-bold tracking-tight text-foreground">
+          Lesson Material
+        </h1>
+        <div className="flex items-center gap-x-4">
+          <PdfViewer pdfKey={"React__1715760661.pdf"} />
+          {data.lessonProgress.length === 0 ? (
+            <Quiz data={data} />
+          ) : (
+            <Button
+              variant="outline"
+              className="bg-green-500/10 text-green-500 hover:text-green-600 mt-4"
+            >
+              <CheckCircle className="size-4 mr-2 text-green-500" />
+              Completed
+            </Button>
+          )}
+        </div>
       </div>
     </div>
   );

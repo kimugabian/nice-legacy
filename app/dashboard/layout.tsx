@@ -6,6 +6,7 @@ import { AppSidebar } from "./_components/DashboardAppSidebar";
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   return (
     <SidebarProvider
+      defaultOpen={false}
       style={
         {
           "--sidebar-width": "calc(var(--spacing) * 72)",

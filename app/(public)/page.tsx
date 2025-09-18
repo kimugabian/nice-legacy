@@ -51,8 +51,8 @@ export default function Home() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 mt-8">
-            <Link className={buttonVariants({ size: "lg" })} href="/courses">
-              Explore Courses
+            <Link className={buttonVariants({ size: "lg" })} href="/dashboard">
+              Go to Dashboard
             </Link>
 
             <Link

@@ -23,13 +23,14 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
           className="flex items-center gap-2 self-center font-medium"
         >
           {/* <Image src={""} /> */}
-          RuangSiswa
+          Ruang Siswa
         </Link>
         {children}
 
         <div className="text-balance text-center text-xs text-muted-foreground">
-          By clicking continue, you agree to our <span>Terms of service</span>{" "}
-          and <span>Privacy Policy</span>.
+          By clicking continue, you agree to our{" "}
+          <span className="hover:underline">Terms of service</span> and{" "}
+          <span className="hover:underline">Privacy Policy</span>.
         </div>
       </div>
     </div>

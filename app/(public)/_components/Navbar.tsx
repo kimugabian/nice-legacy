@@ -8,7 +8,6 @@ import { UserDropdown } from "./UserDropdown";
 
 const navigationItems = [
   { name: "Home", href: "/" },
-  { name: "Courses", href: "/courses" },
   { name: "Dashboard", href: "/dashboard" },
 ];
 
@@ -20,7 +19,7 @@ export function Navbar() {
       <div className="container flex min-h-16 items-center mx-auto px-4 md:px-6 lg:px-8">
         <Link href="/" className="flex items-center space-x-2 mr-4">
           {/* <Image src="/logo.png" alt="logo" className="size-9" /> */}
-          <span className="font-bold">HaHaLMS.</span>
+          <span className="font-bold">Ruang Siswa</span>
         </Link>
 
         {/* Desktop Navigation */}

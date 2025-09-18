@@ -4,37 +4,29 @@ import { requireUser } from "./require-user";
 export async function getEnrolledCourses() {
   const user = await requireUser();
 
-  const data = await prisma.enrollment.findMany({
-    where: {
-      userId: user.id,
-      status: "Active",
-    },
+  const data = await prisma.course.findMany({
     select: {
-      Course: {
+      id: true,
+      title: true,
+      smallDescription: true,
+      fileKey: true,
+      level: true,
+      slug: true,
+      duration: true,
+      chapter: {
         select: {
           id: true,
-          title: true,
-          smallDescription: true,
-          fileKey: true,
-          level: true,
-          slug: true,
-          duration: true,
-          chapter: {
+          lessons: {
             select: {
               id: true,
-              lessons: {
+              lessonProgress: {
+                where: {
+                  userId: user.id,
+                },
                 select: {
                   id: true,
-                  lessonProgress: {
-                    where: {
-                      userId: user.id,
-                    },
-                    select: {
-                      id: true,
-                      completed: true,
-                      lessonId: true,
-                    },
-                  },
+                  completed: true,
+                  lessonId: true,
                 },
               },
             },

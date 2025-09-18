@@ -11,7 +11,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { authClient } from "@/lib/auth-client";
-import { GithubIcon, Loader, Send } from "lucide-react";
+import { IconBrandGoogle } from "@tabler/icons-react";
+import { Loader, Send } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { toast } from "sonner";
@@ -19,13 +20,13 @@ import { toast } from "sonner";
 export function LoginForm() {
   const router = useRouter();
   const [email, setEmail] = useState("");
-  const [githubPending, startgithubTransition] = useTransition();
+  const [googlePending, startGoogleTransition] = useTransition();
   const [emailPending, startEmailTransition] = useTransition();
 
-  const signInWithGithub = async () => {
-    startgithubTransition(async () => {
+  const signInWithGoogle = async () => {
+    startGoogleTransition(async () => {
       await authClient.signIn.social({
-        provider: "github",
+        provider: "google",
         callbackURL: "/",
         fetchOptions: {
           onSuccess: () => {
@@ -61,25 +62,25 @@ export function LoginForm() {
     <Card>
       <CardHeader>
         <CardTitle className="text-xl">Welcome back!</CardTitle>
-        <CardDescription>Login with your Github Email Account</CardDescription>
+        <CardDescription>Login with your Google Email Account</CardDescription>
       </CardHeader>
 
       <CardContent className="flex flex-col gap-4">
         <Button
-          onClick={signInWithGithub}
-          disabled={githubPending}
+          onClick={signInWithGoogle}
+          disabled={googlePending}
           className="w-full"
           variant="outline"
         >
-          {githubPending ? (
+          {googlePending ? (
             <>
               <Loader className="size-4 animate-spin" />
               <span>Loading...</span>
             </>
           ) : (
             <>
-              <GithubIcon className="size-4" />
-              Sign in with Github
+              <IconBrandGoogle className="size-4" />
+              Sign in with Google
             </>
           )}
         </Button>

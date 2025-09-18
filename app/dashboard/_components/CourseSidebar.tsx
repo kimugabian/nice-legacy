@@ -78,19 +78,30 @@ export function CourseSidebar({ course }: iAppProps) {
               </Button>
             </CollapsibleTrigger>
             <CollapsibleContent className="mt-3 pl-6 border-l-2 space-y-3">
-              {chapter.lessons.map((lesson) => (
-                <LessonItem
-                  key={lesson.id}
-                  lesson={lesson}
-                  slug={course.slug}
-                  isActive={lesson.id === currentLessonId}
-                  completed={
-                    lesson.lessonProgress.find(
-                      (progress) => progress.lessonId === lesson.id
-                    )?.completed || false
-                  }
-                />
-              ))}
+              {chapter.lessons.map((lesson, lessonIndex) => {
+                const prevLesson = chapter.lessons[lessonIndex - 1];
+                const prevCompleted =
+                  lessonIndex === 0
+                    ? true
+                    : prevLesson?.lessonProgress.find(
+                        (progress) => progress.lessonId === prevLesson.id
+                      )?.completed ?? false;
+
+                return (
+                  <LessonItem
+                    key={lesson.id}
+                    lesson={lesson}
+                    slug={course.slug}
+                    isActive={lesson.id === currentLessonId}
+                    completed={
+                      lesson.lessonProgress.find(
+                        (progress) => progress.lessonId === lesson.id
+                      )?.completed || false
+                    }
+                    isLocked={!prevCompleted}
+                  />
+                );
+              })}
             </CollapsibleContent>
           </Collapsible>
         ))}

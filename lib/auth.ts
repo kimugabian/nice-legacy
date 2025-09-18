@@ -10,9 +10,9 @@ export const auth = betterAuth({
     provider: "postgresql",
   }),
   socialProviders: {
-    github: {
-      clientId: env.GITHUB_CLIENT_ID,
-      clientSecret: env.GITHUB_SECRET,
+    google: {
+      clientId: env.GOOGLE_CLIENT_ID,
+      clientSecret: env.GOOGLE_CLIENT_SECRET,
     },
   },
 
@@ -20,9 +20,9 @@ export const auth = betterAuth({
     emailOTP({
       async sendVerificationOTP({ email, otp }) {
         await resend.emails.send({
-          from: "HahaLMS <onboarding@resend.dev>",
+          from: "Ruang Siswa <onboarding@resend.dev>",
           to: [email],
-          subject: "HahaLMS - verify your email",
+          subject: "Ruang Siswa - verify your email",
           html: `<p>Your OTP is <strong>${otp}</strong></p>`,
         });
       },
