@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
 import { LessonContentType } from "@/app/data/course/get-lesson-content";
