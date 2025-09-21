@@ -1,6 +1,9 @@
+"use client";
+
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { authClient } from "@/lib/auth-client";
 import Link from "next/link";
 
 interface FeatureProps {
@@ -37,6 +40,7 @@ const features: FeatureProps[] = [
 ];
 
 export default function Home() {
+  const { data: session } = authClient.useSession();
   return (
     <>
       <section className="relative py-20">
@@ -55,12 +59,14 @@ export default function Home() {
               Go to Dashboard
             </Link>
 
-            <Link
-              className={buttonVariants({ size: "lg", variant: "outline" })}
-              href="/login"
-            >
-              Sign in
-            </Link>
+            {!session && (
+              <Link
+                className={buttonVariants({ size: "lg", variant: "outline" })}
+                href="/login"
+              >
+                Sign in
+              </Link>
+            )}
           </div>
         </div>
       </section>
