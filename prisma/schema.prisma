@@ -28,8 +28,6 @@ model User {
   enrollment     Enrollment[]
   lessonProgress LessonProgress[]
 
-  stripeCustomerId String? @unique
-
   role       String?
   banned     Boolean?
   banReason  String?
