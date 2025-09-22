@@ -7,6 +7,7 @@ import {
   IconFileAi,
   IconFileDescription,
   IconHelp,
+  IconHome,
   IconSearch,
   IconSettings,
 } from "@tabler/icons-react";
@@ -27,6 +28,11 @@ import Link from "next/link";
 
 const data = {
   navMain: [
+    {
+      title: "Home",
+      url: "/",
+      icon: IconHome,
+    },
     {
       title: "Dashboard",
       url: "/dashboard",
@@ -106,15 +112,15 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton
+            {/* <SidebarMenuButton
               asChild
               className="data-[slot=sidebar-menu-button]:!p-1.5"
             >
               <Link href="/">
-                {/* <Image src="/logo.png" alt="logo" className="size-5" /> */}
-                <span className="text-base font-semibold">LUMINA</span>
+                <Image src="/logo.png" alt="logo" className="size-5" />
+                <span className="text-base font-semibold">Home</span>
               </Link>
-            </SidebarMenuButton>
+            </SidebarMenuButton> */}
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
