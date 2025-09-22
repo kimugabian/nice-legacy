@@ -139,6 +139,7 @@ export function Quiz({ data }: iAppProps) {
     setCurrentQuestionIndex(0);
     setScore(0);
     setQuizCompleted(false);
+    setIsAnswered(false);
   };
 
   const handleAnswer = (option: string) => {
@@ -174,7 +175,7 @@ export function Quiz({ data }: iAppProps) {
   };
 
   useEffect(() => {
-    if (quizCompleted && percentage >= 70) {
+    if (quizCompleted && percentage >= 80) {
       startTransition(async () => {
         const { data: result, error } = await tryCatch(
           markLessonCompleted(data.id, data.Chapter.Course.slug)
@@ -282,17 +283,32 @@ export function Quiz({ data }: iAppProps) {
                 {/* </div> */}
               </div>
 
-              {/* Final Score */}
-              <div className="p-5  shadow-md rounded-lg flex items-center justify-between col-span-1 md:col-span-3 text-center hover:shadow-lg transition-shadow duration-300">
-                <p className="text-xl font-semibold w-full text-muted-foreground">
-                  You scored {correctAnswers} out of {questions.length}{" "}
-                  questions!
-                </p>
+              {percentage < 80 ? (
+                <div className="p-5  shadow-md rounded-lg flex flex-col items-center justify-between col-span-1 md:col-span-3 text-center hover:shadow-lg transition-shadow duration-300">
+                  <p className="text-lg font-semibold w-full text-muted-foreground">
+                    Your score is {percentage}% below the required score of 80%
+                  </p>
+                  {/* <p className="text-lg font-semibold w-full text-muted-foreground">
+                    Your score is {percentage}% below the required score of
+                    80%.You need to score at least 80% to pass the quiz
+                  </p> */}
 
-                {pending && (
-                  <p className="mt-2 text-sm text-gray-500">Saving...</p>
-                )}
-              </div>
+                  <Button className="mt-4" onClick={startQuiz}>
+                    Restart Quiz
+                  </Button>
+                </div>
+              ) : (
+                <div className="p-5  shadow-md rounded-lg flex items-center justify-between col-span-1 md:col-span-3 text-center hover:shadow-lg transition-shadow duration-300">
+                  <p className="text-xl font-semibold w-full text-muted-foreground">
+                    You scored {correctAnswers} out of {questions.length}{" "}
+                    questions!
+                  </p>
+
+                  {pending && (
+                    <p className="mt-2 text-sm text-gray-500">Saving...</p>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         ) : (
