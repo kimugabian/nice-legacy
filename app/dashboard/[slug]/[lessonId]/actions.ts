@@ -3,7 +3,6 @@
 import { requireUser } from "@/app/data/user/require-user";
 import { prisma } from "@/lib/db";
 import { APiResponse } from "@/lib/types";
-import { revalidatePath } from "next/cache";
 
 export async function markLessonCompleted(
   lessonId: string,
@@ -29,7 +28,7 @@ export async function markLessonCompleted(
       },
     });
 
-    revalidatePath(`/dashboard/${slug}`);
+    // revalidatePath(`/dashboard/${slug}`);
 
     return {
       status: "success",

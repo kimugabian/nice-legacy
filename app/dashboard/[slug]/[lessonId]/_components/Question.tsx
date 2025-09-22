@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
 
 interface QuestionProps {
   question: {
@@ -10,29 +11,32 @@ interface QuestionProps {
     timeLimit: number;
   };
   onAnswer: (answer: string) => void;
-  // onTimeout: () => void;
+  onTimeout: () => void;
 }
 
-export function Question({ question, onAnswer }: QuestionProps) {
-  // const [timeLeft, setTimeLeft] = useState(question.timeLimit);
-  // useEffect(() => {
-  //   setTimeLeft(question.timeLimit);
-  // }, [question]);
+export function Question({ question, onAnswer, onTimeout }: QuestionProps) {
+  const [timeLeft, setTimeLeft] = useState(question.timeLimit);
 
-  // useEffect(() => {
-  //   const timer = setInterval(() => {
-  //     setTimeLeft((prevTime) => {
-  //       if (prevTime <= 1) {
-  //         clearInterval(timer);
-  //         onTimeout();
-  //         return 0;
-  //       }
-  //       return prevTime - 1;
-  //     });
-  //   }, 1000);
+  useEffect(() => {
+    setTimeLeft(question.timeLimit);
+  }, [question]);
 
-  //   return () => clearInterval(timer);
-  // }, [question, onTimeout]);
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft((prevTime) => {
+        if (prevTime <= 1) {
+          clearInterval(timer);
+          setTimeout(() => {
+            onTimeout();
+          }, 0);
+          return 0;
+        }
+        return prevTime - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [question, onTimeout]);
 
   return (
     <div className="shadow-md rounded-lg p-6">
@@ -50,14 +54,16 @@ export function Question({ question, onAnswer }: QuestionProps) {
       </div>
 
       <div className="mt-4 text-center">
-        {/* <p className="text-sm font-medium">Time Left: {timeLeft} seconds</p> */}
+        <p className="text-sm font-medium text-muted-foreground">
+          Time Left: {timeLeft} seconds
+        </p>
 
-        {/* <div className="w-full bg-gray-200 rounded-full h-2.5 mt-2">
+        <div className="w-full bg-gray-200 rounded-full h-2.5 mt-2">
           <div
-            className="bg-blue-600 h-2.5 rounded-full transition-all duration-1000 ease-linear"
+            className="bg-primary h-2.5 rounded-full transition-all duration-1000 ease-linear"
             style={{ width: `${(timeLeft / question.timeLimit) * 100}%` }}
           ></div>
-        </div> */}
+        </div>
       </div>
     </div>
   );

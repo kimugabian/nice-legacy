@@ -36,9 +36,9 @@ export function CourseSidebar({ course }: iAppProps) {
             <h1 className="font-semibold text-base leading-tight truncate">
               {course.title}
             </h1>
-            <p className="text-xs text-muted-foreground mt-1 truncate">
+            {/* <p className="text-xs text-muted-foreground mt-1 truncate">
               {course.category}
-            </p>
+            </p> */}
           </div>
         </div>
 
@@ -79,13 +79,32 @@ export function CourseSidebar({ course }: iAppProps) {
             </CollapsibleTrigger>
             <CollapsibleContent className="mt-3 pl-6 border-l-2 space-y-3">
               {chapter.lessons.map((lesson, lessonIndex) => {
+                // Find the previous lesson inside this chapter
                 const prevLesson = chapter.lessons[lessonIndex - 1];
+
+                // Check if prev lesson completed (within same chapter)
                 const prevCompleted =
                   lessonIndex === 0
-                    ? true
-                    : prevLesson?.lessonProgress.find(
+                    ? (() => {
+                        // Special case: first lesson in a chapter
+                        if (index === 0) {
+                          // First chapter → unlock first lesson
+                          return true;
+                        } else {
+                          // Get last lesson of previous chapter
+                          const prevChapter = course.chapter[index - 1];
+                          const lastLesson = prevChapter.lessons.at(-1);
+
+                          return (
+                            lastLesson?.lessonProgress.find(
+                              (progress) => progress.lessonId === lastLesson.id
+                            )?.completed ?? false
+                          );
+                        }
+                      })()
+                    : (prevLesson?.lessonProgress.find(
                         (progress) => progress.lessonId === prevLesson.id
-                      )?.completed ?? false;
+                      )?.completed ?? false);
 
                 return (
                   <LessonItem

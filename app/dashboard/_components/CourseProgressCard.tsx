@@ -22,7 +22,7 @@ export function CourseProgressCard({ data }: iAppProps) {
 
   return (
     <Card className="group relative py-0 gap-0">
-      <Badge className="absolute top-2 right-2 z-10">{data.level}</Badge>
+      {/* <Badge className="absolute top-2 right-2 z-10">{data.level}</Badge> */}
       <Image
         width={600}
         height={400}

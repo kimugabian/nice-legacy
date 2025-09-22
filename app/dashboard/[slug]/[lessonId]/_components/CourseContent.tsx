@@ -1,16 +1,11 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
 import { LessonContentType } from "@/app/data/course/get-lesson-content";
 import { RenderDescription } from "@/components/rict-text-editor/RenderDescription";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { tryCatch } from "@/hooks/try-catch";
+
 import { useConstructUrl } from "@/hooks/use-construct-url";
 import { BookIcon, CheckCircle, FileText } from "lucide-react";
-import { useTransition } from "react";
-import { markLessonCompleted } from "../actions";
-import { toast } from "sonner";
-import { useConfetti } from "@/hooks/use-confetti";
 import Link from "next/link";
 import { Quiz } from "./Quiz";
 
@@ -19,10 +14,6 @@ interface iAppProps {
 }
 
 export function CourseContent({ data }: iAppProps) {
-  const [pending, startTransition] = useTransition();
-
-  const { triggerConfetti } = useConfetti();
-
   function VideoPlayer({
     thumbnailKey,
     videoKey,
@@ -78,26 +69,6 @@ export function CourseContent({ data }: iAppProps) {
     );
   }
 
-  function onSubmit() {
-    startTransition(async () => {
-      const { data: result, error } = await tryCatch(
-        markLessonCompleted(data.id, data.Chapter.Course.slug)
-      );
-
-      if (error) {
-        toast.error("An unexpected error occurred. Please try again.");
-        return;
-      }
-
-      if (result.status === "success") {
-        toast.success(result.message);
-        triggerConfetti();
-      } else if (result.status === "error") {
-        toast.error(result.message);
-      }
-    });
-  }
-
   return (
     <div className="flex flex-col h-full bg-background pl-6">
       <VideoPlayer
@@ -136,7 +107,7 @@ export function CourseContent({ data }: iAppProps) {
           Lesson Material
         </h1>
         <div className="flex items-center gap-x-4">
-          <PdfViewer pdfKey={"React__1715760661.pdf"} />
+          <PdfViewer pdfKey={"Japanese_Lesson1_Presentation1.pdf"} />
           {data.lessonProgress.length === 0 ? (
             <Quiz data={data} />
           ) : (

@@ -112,7 +112,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             >
               <Link href="/">
                 {/* <Image src="/logo.png" alt="logo" className="size-5" /> */}
-                <span className="text-base font-semibold">Miraida</span>
+                <span className="text-base font-semibold">LUMINA</span>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
