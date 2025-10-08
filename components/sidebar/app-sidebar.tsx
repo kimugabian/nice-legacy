@@ -38,7 +38,7 @@ const data = {
     },
     {
       title: "Courses",
-      url: "/admin/courses",
+      url: "/dashboard/admin/courses",
       icon: IconListDetails,
     },
     {

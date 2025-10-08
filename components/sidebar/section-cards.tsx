@@ -12,7 +12,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { adminGetDashboardStats } from "@/app/data/admin/admin-get-dashboard-stats";
+import { adminGetDashboardStats } from "@/app/dashboard/data/admin/admin-get-dashboard-stats";
 
 export async function SectionCards() {
   const { totalSignups, totalCustomers, totalCourses, totalLessons } =

@@ -122,7 +122,7 @@ export function NavUser() {
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link href="/admin/courses">
+                <Link href="/dashboard/admin/courses">
                   <Tv2 />
                   Courses
                 </Link>

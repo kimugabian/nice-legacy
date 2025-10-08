@@ -2,16 +2,11 @@
 
 import * as React from "react";
 import {
-  IconCamera,
   IconDashboard,
-  IconFileAi,
-  IconFileDescription,
-  IconHelp,
   IconHome,
-  IconSearch,
+  IconBook,
   IconSettings,
 } from "@tabler/icons-react";
-
 import { NavMain } from "@/components/sidebar/nav-main";
 import { NavSecondary } from "@/components/sidebar/nav-secondary";
 import { NavUser } from "@/components/sidebar/nav-user";
@@ -21,112 +16,49 @@ import {
   SidebarFooter,
   SidebarHeader,
   SidebarMenu,
-  SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import Link from "next/link";
-
-const data = {
-  navMain: [
-    {
-      title: "Home",
-      url: "/",
-      icon: IconHome,
-    },
-    {
-      title: "Dashboard",
-      url: "/dashboard",
-      icon: IconDashboard,
-    },
-  ],
-  navClouds: [
-    {
-      title: "Capture",
-      icon: IconCamera,
-      isActive: true,
-      url: "#",
-      items: [
-        {
-          title: "Active Proposals",
-          url: "#",
-        },
-        {
-          title: "Archived",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Proposal",
-      icon: IconFileDescription,
-      url: "#",
-      items: [
-        {
-          title: "Active Proposals",
-          url: "#",
-        },
-        {
-          title: "Archived",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Prompts",
-      icon: IconFileAi,
-      url: "#",
-      items: [
-        {
-          title: "Active Proposals",
-          url: "#",
-        },
-        {
-          title: "Archived",
-          url: "#",
-        },
-      ],
-    },
-  ],
-  navSecondary: [
-    {
-      title: "Settings",
-      url: "#",
-      icon: IconSettings,
-    },
-    {
-      title: "Get Help",
-      url: "#",
-      icon: IconHelp,
-    },
-    {
-      title: "Search",
-      url: "#",
-      icon: IconSearch,
-    },
-  ],
-};
+import { authClient } from "@/lib/auth-client";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const { data: session } = authClient.useSession();
+  const role = session?.user?.role;
+
+  // menu default
+  const navMain = [
+    { title: "Home", url: "/", icon: IconHome },
+    { title: "Dashboard", url: "/dashboard", icon: IconDashboard },
+  ];
+
+  // role-based menu
+  if (role === "ADMIN") {
+    navMain.push({ title: "Manage Courses", url: "/dashboard/admin/courses", icon: IconBook });
+  }
+
+  if (role === "TEACHER") {
+    navMain.push({ title: "My Courses", url: "/dashboard/teacher/courses", icon: IconBook });
+  }
+
+  if (role === "STUDENT") {
+    navMain.push({ title: "Enrolled Courses", url: "/dashboard/student", icon: IconBook });
+  }
+
+  const navSecondary = [
+    { title: "Settings", url: "/settings", icon: IconSettings },
+  ];
+
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            {/* <SidebarMenuButton
-              asChild
-              className="data-[slot=sidebar-menu-button]:!p-1.5"
-            >
-              <Link href="/">
-                <Image src="/logo.png" alt="logo" className="size-5" />
-                <span className="text-base font-semibold">Home</span>
-              </Link>
-            </SidebarMenuButton> */}
+            <span className="text-lg font-bold px-2">LMS</span>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
-        <NavSecondary items={data.navSecondary} className="mt-auto" />
+        <NavMain items={navMain} />
+        <NavSecondary items={navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
         <NavUser />
